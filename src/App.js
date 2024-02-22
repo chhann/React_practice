@@ -1,50 +1,44 @@
-
-import './App.css';
-import StudentInfo from './components/StudentInfo';
-import InfoInput from './components/InfoInput';
+import { Link, Route, Routes } from 'react-router-dom';
 import { useState } from 'react';
-import StudentAnser from './answer/StudentAnser';
+import './App.css';
+import Memoization from './pages/Memoization';
+import StudentArrayPage2 from './pages/StudentArrayPage2';
+import StudentArrayPage3 from './pages/StudentArrayPage3';
+import StudentPage from './pages/StudentPage';
+import Params from './pages/Params';
+import SearchPage from './pages/SearchPage';
+import ProductPage from './pages/ProductPage';
+import SubRoute from './pages/SubRoute';
+
 
 function App() {
-  const [userName, setUserName] = useState('이름');
-  const [userAge, setUserAge] = useState('나이');
-  const [userAddress, setUserAddress] = useState('주소');
-
-
-  const [responName, setResponName] = useState();
-  const [responAge, setResponAge] = useState();
-  const [responAddress, setResponAddress] = useState();
-
-  const handleOnInsert = () => {
-    setResponName(userName)
-    setResponAge(userAge)
-    setResponAddress(userAddress)
-    setUserName("")
-    setUserAge("")
-    setUserAddress("")
-  }
-
-  const handleOnDelete = () => {
-    setResponName("")
-    setResponAge("")
-    setResponAddress("")
-  }
-
+  const [ value, setValue ] = useState("");
 
   return (
     <>
-      {/* <StudentInfo set={responName} title={"이름"}/>
-      <StudentInfo set={responAge} title={"나이"}/>
-      <StudentInfo set={responAddress} title={"주소"}/>
-      
-      <InfoInput set={setUserName} value={userName}/>
-      <InfoInput set={setUserAge} value={userAge}/>
-      <InfoInput set={setUserAddress} value={userAddress}/>
+      <input onChange={(e) => setValue(e.target.value)} type="text"/>
+      <ul>
+        <Link to="/memoization"><li>메모이제이션</li></Link>
+        <Link to="/st"><li>학생정보</li></Link>
+        <Link to="/sta1"><li>학생들정보1</li></Link>
+        <Link to="/sta3"><li>학생들정보3</li></Link>
+        <Link to={`/p?data=${value}`}><li>파람스</li></Link>
+        <Link to={`/books?bookName=${value}` }><li>서치페이지</li></Link>
 
-      <button onClick={handleOnInsert}>확인</button>
-      <button onClick={handleOnDelete}>비우기</button> */}
 
-      <StudentAnser/>
+      </ul>
+
+      <Routes>
+        <Route path='/memoization' element={<Memoization/>}/>
+        <Route path='/st' element={<StudentPage/>}/>
+        <Route path='/sta1' element={<StudentArrayPage2/>}/>
+        <Route path='/sta3' element={<StudentArrayPage3/>}/>
+        <Route path='/p' element={<Params/>}/>
+        <Route path='/books' element={<SearchPage/>}/>
+        <Route path='/product/:productId' element={<ProductPage/>}/>
+        <Route path='/sub/*' element={<SubRoute/>}/>
+
+      </Routes>
     </>
   );
 }
